@@ -52,22 +52,6 @@ def time_step(S, params):
         - np.cross(S[:,:], params.ksi))
     return C * Sj_cross_H + params.alpha * np.cross(S[:,:], Sj_cross_H)
 
-params = EquationParameters()
-
-t_max = 5
-h = 0.01
-N = t_max//h
-S = heun(1, t_max, h, params)
-plt.plot(np.arange(N), S[:,:,0], label="x")
-plt.plot(np.arange(N), S[:,:,1], label="y")
-plt.plot(np.arange(N), S[:,:,2], label="z")
-plt.legend()
-plt.show()
-
-print("Final:")
-print(S)
-
-
 ## Unnecessary stuff, right?
 #def H(S, J, B, d_z=0, mu=0):
 #    """ The Hamiltonian function.
