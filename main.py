@@ -1,33 +1,28 @@
 import numpy as np
 from heun import *
+from plotting import *
+from save import *
 
 
 def run_simulation():
     params = EquationParameters()
-    n = 1
-    t_max = 20
-    h = 0.01
+    n = 10
+    t_max = 200
+    h = 0.1
     N = t_max//h
     N = int(t_max//h)
     S = np.zeros((N, n, 3))
-    #S[0,:,0] = 0
-    #S[0,:,1] = 0
-    #S[0,:,2] = 1
+    S[0,:,0] = 1
+    S[0,:,1] = 0
+    S[0,:,2] = 0
     S[0,0,0] = 0
-    S[0,0,1] = 1
+    S[0,0,1] = 0
     S[0,0,2] = 1
     S = heun(S, t_max, h, params)
-    return S
+    return S, np.linspace(0,t_max,N)
 
+S, t = run_simulation()
+save_data("./report/data/S.csv", S, t)
+#plot_results(S)
 
-def plot_results(S):
-    N = len(S)
-    plt.plot(np.arange(N), S[:,:,0], label="x")
-    plt.plot(np.arange(N), S[:,:,1], label="y")
-    plt.plot(np.arange(N), S[:,:,2], label="z")
-    plt.legend()
-    plt.show()
-
-S = run_simulation()
-plot_results(S)
-
+plot_3d(S)

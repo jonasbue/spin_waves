@@ -1,0 +1,23 @@
+\documentclass{article}
+\usepackage{pgfplots}
+\pgfplotsset{compat = 1.17}
+
+
+\begin{document}
+Heihei!
+
+\begin{figure}
+    \begin{tikzpicture}
+        \begin{axis}[
+            black,
+            xlabel = t,
+            ylabel = y,
+        ]
+            \addplot [
+                x = \thisrow{t},
+                y = \thisrow{u0},
+            ] table {./data/S.csv};
+        \end{axis}
+    \end{tikzpicture}
+\end{figure}
+\end{document}
