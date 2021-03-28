@@ -1,40 +1,47 @@
 import numpy as np
 import matplotlib.pyplot as plt
 # Maybe add scipy sparse at some point?
+# After first implementation, that doesn't
+# strike me as particularly practical.
 
 class EquationParameters:
+    """ A class containing the parameters of the equation of motion."""
     J       = 1.0   # Coupling constant between neighboring spins.
                     # Would be nice to genaralize this to a function
                     # to allow for long distance coupling, 
                     # but that is really unnecessary for now.
-    d_z     = 1.0   # Anisometry constant.
+    d_z     = 0.0   # Anisometry constant.
     mu      = 1.0   # Magnetic moment. 
                     # Not sure if we're taking this to be constant
                     # or summing over all S's to find it.
     gamma   = 1.0   # Gyromagnetic ratio.
-    alpha   = 1.0   # Damping constant.
+    alpha   = 0.0   # Damping constant.
     B       = np.array([0,0,1.0])   # External magnetiic field.
-    ksi     = np.array([1,0,0])     # Thermal noise.
+    ksi     = np.array([0,0,0])     # Thermal noise.
                                     # Will probably stay zero.
 
-def heun(n, t_max, h, params):
+def heun(S, t_max, h, params, normalize=True):
     """ Solves a differential equation using Heun's method.
         Arguments:
-            n:      int. The number of spins (particles).
-            t_max:  float. The duration of the simulation.
-            h:      float. The size of the time steps.
-            params: EquationParameters. Class containing 
-                    all parameters required by the time_step()
-                    function.
+            n:          int. The number of spins (particles).
+            t_max:      float. The duration of the simulation.
+            h:          float. The size of the time steps.
+            params:     EquationParameters. Class containing 
+                        all parameters required by the time_step()
+                        function.
+            normalize:  bool. If true, S is normalized to length 1
+                        after every time step.
         Returns:
-            S:      Array (1D). The spins of all particles.
+        S:      Array (1D). The spins of all particles.
     """
-    N = int(t_max//h)
-    S = np.zeros((N, n, 3))
-    S[0,0,1] = 0.1
-    #print("Initial:")
-    #print(S)
+    N = len(S)
+    # Assert that all Sj have a nonzero spin.
+    assert np.any(np.linalg.norm(S[0,:,:], axis=1) == 0) == False
     for i in range(N-1):
+        # First, normalize S[i] so that the length of S is conserved.
+        if normalize:
+            S_abs = np.linalg.norm(S[i,:,:], axis=1)
+            S[i,:,:] = np.divide(S[i,:], np.transpose(np.tile(S_abs, (3,1))))
         S[i+1,:,:] = heun_step(S[i,:,:], h, params)
     return S
 
@@ -45,17 +52,8 @@ def heun_step(S, h, params):
 
 def time_step(S, params):
     C = params.gamma / (params.mu * (1 + params.alpha**2))
-    #print(S[1:-1].shape,"\n", S[2:].shape, "\n", S[:-2].shape)
-    #print(2*params.J*np.cross(S[1:-1,:], S[1:,:] + S[:-1,:]))
-    #print("S:")
-    #print(S)
-
-    #print("S[1:-1]\n", S[1:-1,:],"\n S[0:-2]", S[0:-2,:], "\n S[2:]", S[2:,:])
-    #print(np.tile([0,0,1], (len(S)-2,1)))
-
     Sj_cross_H = np.zeros(S.shape)
     Sz = np.transpose(np.tile(S[:,2], (3,1)))
-    print(Sz)
 
     # This is the "main body" of the equation of motion,
     # containing everythin but the correlation 
@@ -75,46 +73,3 @@ def time_step(S, params):
             Sj_cross_H[1:-1] += 2*params.J*(np.cross(S[1:-1,:], S[0:-2,:] + S[2:,:]))
 
     return C * Sj_cross_H + params.alpha * np.cross(S[:,:], Sj_cross_H)
-
-## Unnecessary stuff, right?
-#def H(S, J, B, d_z=0, mu=0):
-#    """ The Hamiltonian function.
-#        Arguments:
-#            S:      Array (1D). The spins of all particles.
-#            J:      Function. The coupling constant.
-#            B:      Array (3D). The external magnetic field.
-#            d_z:    Float. The anisotropy constant. d_z > 0.
-#            mu:     Float. Total magnetic moment of system.
-#        Returns:
-#            H:      Float. Total energy of system, i.e. the Hamiltonian.
-#    """
-#    J_arr = J*kr_delta_arr(len(S))
-#    a = np.sum(np.einsum("jk,j,k", J_arr, S, S))
-#    return a
-#
-#
-#def J(coupling, j, k):
-#    return coupling*kr_delta(j,k)
-#
-#def kr_delta(j,k):
-#    """ Kroenecker delta function."""
-#    # May be computed using explicit einsum().
-#    if j == k:
-#        return 1
-#    else:
-#        return 0
-#
-#def kr_delta_arr(n):
-#    """ Returns an array-like kronecker delta."""
-#    return np.einsum('ij,kl->ijkl', np.eye(n,n), np.eye(n,n))
-#
-#
-#S = np.array([1,1,2])
-##a = np.sum(np.einsum("jk,j,k", J(1,j,k), S, S))
-#J_arr = 1*np.identity(len(S))
-#print(J_arr)
-#a = np.sum(np.einsum("jk,j,k", J_arr, S, S))
-#a = np.sum(np.einsum("jk,j,k", J_arr, S , S))
-#
-#print(a)
-############################
