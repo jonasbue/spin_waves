@@ -46,11 +46,30 @@ def heun(S, t_max, h, params, normalize=True):
     return S
 
 def heun_step(S, h, params):
+    """ Iterates one step of the Heun method.
+        Arguments:
+            S:      Spin array for one point in time (such as S[i,:,:]).
+            h:      Step length in time.
+            params: EquationParameters.
+        Return:
+            S_new:  The next iteration of the spin array.
+    """
     S_p = S + h*time_step(S, params)
     S_new = S + 0.5*h*(S_p + time_step(S_p, params))
     return S_new
 
 def time_step(S, params):
+    """ Calculates a time step of the Heun method.
+        This function is specific for one particular equation of motion.
+        Arguments:
+            S:      Spin array for one point in time.
+            h:      Step length in time.
+            params: EquationParameters. Hold parameters for the
+                    equation of mortion.
+        Returns:
+            dtS:    The time derivative of S.
+        
+    """
     C = params.gamma / (params.mu * (1 + params.alpha**2))
     Sj_cross_H = np.zeros(S.shape)
     Sz = np.transpose(np.tile(S[:,2], (3,1)))
