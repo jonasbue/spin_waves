@@ -4,20 +4,17 @@
 
 
 \begin{document}
-Heihei!
 
 \begin{figure}
-    \begin{tikzpicture}
-        \begin{axis}[
-            black,
-            xlabel = t,
-            ylabel = y,
-        ]
-            \addplot [
-                x = \thisrow{t},
-                y = \thisrow{u0},
-            ] table {./data/S.csv};
-        \end{axis}
-    \end{tikzpicture}
+    \input{error_x.pgf}
 \end{figure}
+
+\begin{figure}
+    \input{error_y.pgf}
+\end{figure}
+
+\begin{figure}
+    \input{error_z.pgf}
+\end{figure}
+
 \end{document}

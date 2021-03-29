@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        black,
+        xlabel = t,
+        ylabel = Spin amplitude,
+    ]
+        \addplot [
+            mark = none,
+        ] table [
+            y = y0,
+        ]{./data/one_spin_alpha_0-0.csv};
+        \addlegendentry{Computed}
+        \addplot [
+            mark = none,
+            style = dotted,
+        ] table [
+            y = analytical_y0,
+        ]{./data/one_spin_alpha_0-0.csv};
+        \addlegendentry{Analytical}
+    \end{axis}
+\end{tikzpicture}

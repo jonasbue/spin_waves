@@ -1,7 +1,8 @@
 from heun import *
 from plotting import *
+from save import *
 
-def one_spin(S, params, t_max, h, plot=True, anim=False, save=False):
+def one_spin(S, params, t_max, h, plot=True, anim=False, save=False, analytical=False):
     """ Task 1. Modelling a single particle spin
         in a homogeneous B-field in the z-direction.
         Arguments:
@@ -13,16 +14,28 @@ def one_spin(S, params, t_max, h, plot=True, anim=False, save=False):
     N = len(S)
     S = heun(S, t_max, h, params)
     t = np.linspace(0,t_max,N)
+    an_sol = analytical_solution(S[0,0,:], params, t)
     if plot:
-        plot_results(S, x=True, y=True, z=True)
+        plot_results(S, t_max, x=True, y=True, z=True)
+        if analytical:
+            plt.plot(t, an_sol[:,0], linestyle="--", label="Analytical")
+            plt.plot(t, an_sol[:,1], linestyle="--", label="Analytical")
+            plt.plot(t, an_sol[:,2], linestyle="--", label="Analytical")
+            plt.legend()
+        plt.show()
         phase_plot(S, 0, 1)
+        plt.plot(an_sol[:,0], an_sol[:,1], linestyle="--", label="Analytical")
+        plt.show()
     if anim:
         plot_3d(S)
     if save:
         # To avoid periods in file name, use a dash instead.
-        a_str = str(alpha).replace(".", "-")
+        a_str = str(params.alpha).replace(".", "-")
         filename = f"../report/data/one_spin_alpha_{a_str}.csv"
-        save_data(filename, S, t)
+        if analytical:
+            save_data(filename, S, t, an_sol)
+        else:
+            save_data(filename, S, t)
     return S, np.linspace(0,t_max,N)
 
 
@@ -30,8 +43,10 @@ def spin_chain(S, params, t_max, h, plot=True, anim=False, save=False):
     N = int(t_max//h)
     S = heun(S, t_max, h, params)
     if plot:
-        plot_results(S, z=True)
+        plot_results(S, t_max, z=True)
+        plt.show()
         phase_plot(S, 0, 2)
+        plt.show()
     if anim:
         plot_3d(S)
     if save:
@@ -60,7 +75,7 @@ def run_simulation(n, params, t_max=10, h=0.01, init="x",
     S = make_S(init, n, N, first_particle=first_particle)
     if n == 1:
         one_spin(S, params, t_max, h,
-            plot=plot, anim=anim, save=save)
+            plot=plot, anim=anim, save=save, analytical=True)
     elif n > 1:
         spin_chain(S, params, t_max, h,
             plot=plot, anim=anim, save=save)
