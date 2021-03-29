@@ -16,11 +16,12 @@ class EquationParameters:
                     # or summing over all S's to find it.
     gamma   = 1.0   # Gyromagnetic ratio.
     alpha   = 0.0   # Damping constant.
-    B       = np.array([0,0,1.0])   # External magnetiic field.
+    B_0     = 1.0
+    B       = np.array([0,0,B_0])   # External magnetiic field.
     ksi     = np.array([0,0,0])     # Thermal noise.
                                     # Will probably stay zero.
 
-def heun(S, t_max, h, params, normalize=True):
+def heun(S, t_max, h, params):
     """ Solves a differential equation using Heun's method.
         Arguments:
             n:          int. The number of spins (particles).
@@ -29,8 +30,6 @@ def heun(S, t_max, h, params, normalize=True):
             params:     EquationParameters. Class containing 
                         all parameters required by the time_step()
                         function.
-            normalize:  bool. If true, S is normalized to length 1
-                        after every time step.
         Returns:
         S:      Array (1D). The spins of all particles.
     """
@@ -39,9 +38,13 @@ def heun(S, t_max, h, params, normalize=True):
     assert np.any(np.linalg.norm(S[0,:,:], axis=1) == 0) == False
     for i in range(N-1):
         # First, normalize S[i] so that the length of S is conserved.
-        if normalize:
-            S_abs = np.linalg.norm(S[i,:,:], axis=1)
-            S[i,:,:] = np.divide(S[i,:], np.transpose(np.tile(S_abs, (3,1))))
+        # Doing this at every instance feels wrong,
+        # but it prevents divergence and the results look as expected.
+        # If I normalize only at t=0, the the length diverges horribly
+        # for large t.
+        # TODO: Discuss with someone.
+        S_abs = np.linalg.norm(S[i,:,:], axis=1)
+        S[i,:,:] = np.divide(S[i,:], np.transpose(np.tile(S_abs, (3,1))))
         S[i+1,:,:] = heun_step(S[i,:,:], h, params)
     return S
 

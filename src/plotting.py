@@ -21,15 +21,26 @@ def plot_3d(S):
     anim()
     mlab.show()
 
-def plot_results(S):
+def plot_results(S, x=False, y=False, z=False):
     """ Plots the spin directions as functions of time.
         Arguments:
             S: Array. As defined in heun.py.
     """
     N = len(S)
-    plt.plot(np.arange(N), S[:,:,0], label="x")
-    plt.plot(np.arange(N), S[:,:,1], label="y")
-    plt.plot(np.arange(N), S[:,:,2], label="z")
+    if x:
+        plt.plot(np.arange(N), S[:,:,0], label="x")
+    if y:
+        plt.plot(np.arange(N), S[:,:,1], label="y")
+    if z:
+        plt.plot(np.arange(N), S[:,:,2], label="z")
     plt.legend()
+    plt.title("Spin amplitude")
+    plt.xlabel("Time")
     plt.show()
 
+def phase_plot(S, x, y):
+    N = len(S)
+    plt.plot(S[:,:,x], S[:,:,y], label="Spin")
+    plt.legend()
+    plt.title("Phase plot")
+    plt.show()
