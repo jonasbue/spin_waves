@@ -3,7 +3,13 @@ from simulation import *
 
 def task_1():
     params = EquationParameters()
-    S = run_simulation(1, params, first_particle=np.array([0,0.1,0.9]))
+    # First, look at one spin.
+    ##S = run_simulation(1, params, first_particle=np.array([0,0.1,0.9]))
+    # Second, perform an error analysis.
+    # Third, include damping.
+    params.alpha = 0.35
+    params.d_z = 0.0
+    S = run_simulation(1, params, t_max=30, first_particle=np.array([0,0.1,0.9]))
 
 def task_2():
     n = 3

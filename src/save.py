@@ -22,4 +22,5 @@ def save_data(filename, S, time):
 
     headers = "t\t" + "\t".join(f"x{i}\ty{i}\tz{i}" for i in range(n)) + "\tn"
     np.savetxt(filename, S_save, header=headers, delimiter="\t")
+    print("Data saved successfully.")
 

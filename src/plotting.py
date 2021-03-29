@@ -39,6 +39,14 @@ def plot_results(S, x=False, y=False, z=False):
     plt.show()
 
 def phase_plot(S, x, y):
+    """ Makes a phase plot, i.e. a plot of the spin in one direction
+        agains the spin in another direction.
+        Arguments:
+            S:  Spin array.
+            x:  Index of the compnent to be plotted along x-axis.
+                0 means x component, 1 means y and 2 means z.
+            y:  Index of the compnent to be plotted along y-axis.
+    """
     N = len(S)
     plt.plot(S[:,:,x], S[:,:,y], label="Spin")
     plt.legend()

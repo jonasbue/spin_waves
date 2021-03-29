@@ -25,6 +25,7 @@ def one_spin(S, params, t_max, h, plot=True, anim=False, save=False):
         save_data(filename, S, t)
     return S, np.linspace(0,t_max,N)
 
+
 def spin_chain(S, params, t_max, h, plot=True, anim=False, save=False):
     N = int(t_max//h)
     S = heun(S, t_max, h, params)
@@ -43,7 +44,8 @@ def spin_chain(S, params, t_max, h, plot=True, anim=False, save=False):
 
 def error_analysis():
     #TODO: Make this.
-    return 0 # That's a nice error.
+    return 0 # Zero is a nice error.
+
 
 def run_simulation(n, params, t_max=10, h=0.01, init="x", 
     first_particle=np.array([]), plot=True, anim=False, save=False):
@@ -54,13 +56,17 @@ def run_simulation(n, params, t_max=10, h=0.01, init="x",
             S: Spin array.
     """
     N = int(t_max//h) # Number of time steps
-    S = make_S(init, n, N, first_particle=first_particle) # Initialize S
+    # Initialize S
+    S = make_S(init, n, N, first_particle=first_particle)
     if n == 1:
-        one_spin(S, params, t_max, h)
+        one_spin(S, params, t_max, h,
+            plot=plot, anim=anim, save=save)
     elif n > 1:
-        spin_chain(S, params, t_max, h)
+        spin_chain(S, params, t_max, h,
+            plot=plot, anim=anim, save=save)
     S = heun(S, t_max, h, params)
     return S
+
 
 def make_S(init, n, N, first_particle):
     """ Creates a spin array, and gives all particles
@@ -91,11 +97,7 @@ def make_S(init, n, N, first_particle):
         S[0,:,1] = 0.1
         S[0,:,2] = 1
     elif init == "random":
-        # Got these from random.org.
         # Quality random numbers.
-        #S[0,:,0] = -0.1
-        #S[0,:,1] = 0.7
-        #S[0,:,2] = 0.3
         S[0,0,0] = 0.1
         S[0,0,1] = 0.1
         S[0,0,2] = 0.8

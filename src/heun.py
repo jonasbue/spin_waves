@@ -1,12 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
-# Maybe add scipy sparse at some point?
-# After first implementation, that doesn't
-# strike me as particularly practical.
 
 class EquationParameters:
     """ A class containing the parameters of the equation of motion."""
-    J       = 1.0   # Coupling constant between neighboring spins.
+    J       = 0.0   # Coupling constant between neighboring spins.
                     # Would be nice to genaralize this to a function
                     # to allow for long distance coupling, 
                     # but that is really unnecessary for now.
