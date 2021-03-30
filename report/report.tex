@@ -1,20 +1,29 @@
 \documentclass{article}
 \usepackage{pgfplots}
+\usepgfplotslibrary{groupplots}
 \pgfplotsset{compat = 1.17}
 
 
 \begin{document}
 
 \begin{figure}
+    \centering
     \input{error_x.pgf}
 \end{figure}
 
 \begin{figure}
+    \centering
     \input{error_y.pgf}
 \end{figure}
 
 \begin{figure}
+    \centering
     \input{error_z.pgf}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \input{convergence.pgf}
 \end{figure}
 
 \end{document}

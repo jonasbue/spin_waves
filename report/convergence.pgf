@@ -1,0 +1,58 @@
+\begin{tikzpicture}
+\begin{groupplot}[
+    group style={
+        group name = covergence,
+        group size = 2 by 1,
+        vertical sep = 50 pt,
+        ylabels at=edge left,
+        yticklabels at=edge left,
+    },
+    xlabel = N,
+    ylabel = Numerical error,
+    xmode = log,
+    ymode = log,
+    separate axis lines,
+    width=0.6\linewidth,
+]
+\nextgroupplot 
+    \addplot [
+        mark = square*,
+        %style = dotted,
+    ] table [
+        y = heun,
+    ]{./data/errors.csv};
+    \addlegendentry{Heun's method}
+    \addplot [
+        mark = o,
+        %style = dotted,
+    ] table [
+        y = euler,
+    ]{./data/errors.csv};
+    \addlegendentry{Euler's method}
+
+\nextgroupplot [
+    legend style={at={(0.02,0.02)}, anchor=south west},
+]
+    \addplot [
+        mark = square*,
+        %style = dotted,
+    ] table [
+        y = heun,
+    ]{./data/errors.csv};
+    \addlegendentry{Heun's method}
+    \addplot [
+        mark = o,
+        %style = dotted,
+    ] table [
+        y = euler,
+    ]{./data/errors.csv};
+    \addlegendentry{Euler's method}
+    \addplot [
+        mark = triangle,
+        %style = dotted,
+    ] table [
+        y = rk4,
+    ]{./data/errors.csv};
+    \addlegendentry{Runge-Kutta 4}
+\end{groupplot}
+\end{tikzpicture}

@@ -9,15 +9,21 @@ def task_1():
     # Third, include damping.
     params.alpha = 0.0
     params.d_z = 0.0
-    for method in [heun_step, euler_step, rk4_step]:
-        S = run_simulation(
-            1, params, t_max=30, h=0.01,
-            first_particle=np.array([0,0.1,0.9]), 
-            plot=True,
-            save=True,
-            method=method)
-        convergence_plot(S[0,0,:], params, method)
-        plt.show()
+    S_init = np.array([0,0.1,0.9])
+    #for method in [heun_step, euler_step, rk4_step]:
+    #    S = run_simulation(
+    #        1, params, t_max=30, h=0.01,
+    #        first_particle=S_init, 
+    #        plot=True,
+    #        save=True,
+    #        method=method)
+    methods = [heun_step, euler_step, rk4_step]
+    N_arr = np.array([2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048])
+    errors = np.zeros((len(methods), len(N_arr)))
+    for (i, method) in enumerate(methods):
+        errors[i] = convergence_plot(S_init, params, method, N_arr)
+    save_errors("../report/data/errors.csv", errors, N_arr, methods)
+    plt.show()
 
 def task_2():
     n = 3

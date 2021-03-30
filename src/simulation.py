@@ -130,13 +130,12 @@ def make_S(init, n, N, first_particle):
         S[0,0,:] = first_particle
     return S
 
-def convergence_plot(init, params, method):
+def convergence_plot(init, params, method, N_arr):
     """ Makes a convergence plot. """
     t_max = 20
-    all_N = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048]
     #all_h = np.divide(t_max, all_N)
-    error = np.zeros(len(all_N))
-    for (i, N) in enumerate(all_N):
+    error = np.zeros(len(N_arr))
+    for (i, N) in enumerate(N_arr):
         # Run the simulation for task 1 for all h.
         time = np.linspace(0,t_max,N)
         h = t_max/N
@@ -149,9 +148,12 @@ def convergence_plot(init, params, method):
         an_sol = analytical_solution(init, params, time)
         error[i] = get_error(S[:,0,:], an_sol)
     
-    plt.plot(all_N, error, marker="o", linestyle="--")
+    method_name = method.__name__[:-4]
+    plt.plot(N_arr, error, marker="o", linestyle="--", label=method_name)
     plt.xscale("log")
     plt.yscale("log")
     #plt.gca().invert_xaxis()
     plt.title("Convergence plot")
+    plt.legend()
+    return error
 

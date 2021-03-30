@@ -27,3 +27,20 @@ def save_data(filename, S, time, analytical=[]):
     np.savetxt(filename, S_save, header=headers, comments="", delimiter="\t")
     print(f"Data saved to {filename} successfully.")
 
+
+def save_errors(filename, errors, N_arr, methods):
+    """ Saves the errors of the methods.
+        Data should be used for convergence plots.
+        Arguments:
+            filename:   string.
+            errors:     Array. Calculated errors. 
+            N_arr:      Array. The number of time steps.
+            methods:    Array of functions. Contains the functions
+                        used to calculate the data.
+    """
+    print(N_arr.shape)
+    print(errors.shape)
+    err_save = np.column_stack((N_arr, np.transpose(errors)))
+    headers = "h\t" + "".join(f"{m.__name__[:-5]}\t" for m in methods)
+    np.savetxt(filename, err_save, header=headers, comments="", delimiter="\t")
+    print(f"Numerical errors saved to {filename} successfully.")
