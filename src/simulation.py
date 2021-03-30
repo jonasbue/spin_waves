@@ -17,12 +17,11 @@ def run_simulation(n, params, method, t_max=10, h=0.01, init="x",
     # Initialize S
     S = make_S(init, n, N, first_particle=first_particle)
     if n == 1:
-        one_spin(S, params, t_max, h, method,
+        S, time = one_spin(S, params, t_max, h, method,
             plot=plot, anim=anim, save=save, analytical=True)
     elif n > 1:
-        spin_chain(S, params, t_max, h, method,
+        S, time = spin_chain(S, params, t_max, h, method,
             plot=plot, anim=anim, save=save)
-    S = integrate(S, t_max, h, params, method)
     return S
 
 
@@ -130,15 +129,15 @@ def make_S(init, n, N, first_particle):
         S[0,0,:] = first_particle
     return S
 
-def convergence_plot(init, params, method, N_arr):
+def convergence_plot(init, params, method, h_arr):
     """ Makes a convergence plot. """
-    t_max = 20
+    t_max = 10
     #all_h = np.divide(t_max, all_N)
-    error = np.zeros(len(N_arr))
-    for (i, N) in enumerate(N_arr):
+    error = np.zeros(len(h_arr))
+    for (i, h) in enumerate(h_arr):
         # Run the simulation for task 1 for all h.
+        N = int(t_max//h)
         time = np.linspace(0,t_max,N)
-        h = t_max/N
         S = run_simulation(
             1, params, t_max=t_max, h=h,
             first_particle=np.array([0,0.1,0.9]),
@@ -149,10 +148,10 @@ def convergence_plot(init, params, method, N_arr):
         error[i] = get_error(S[:,0,:], an_sol)
     
     method_name = method.__name__[:-4]
-    plt.plot(N_arr, error, marker="o", linestyle="--", label=method_name)
+    plt.plot(h_arr, error, marker="o", linestyle="--", label=method_name)
     plt.xscale("log")
     plt.yscale("log")
-    #plt.gca().invert_xaxis()
+    plt.gca().invert_xaxis()
     plt.title("Convergence plot")
     plt.legend()
     return error

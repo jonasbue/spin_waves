@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 
 class EquationParameters:
     """ A class containing the parameters of the equation of motion."""
@@ -36,7 +37,12 @@ def integrate(S, t_max, h, params, method):
     N = len(S)
     # Assert that all Sj have a nonzero spin.
     assert np.any(np.linalg.norm(S[0,:,:], axis=1) == 0) == False
+    print("Running simulation using", method.__name__[:-5] 
+    + f"'s method, with h = {h}.")
+
+    start_time = time.time()
     for i in range(N-1):
+        status_bar(i, N)
         # First, normalize S[i] so that the length of S is conserved.
         # Doing this at every instance feels wrong,
         # but it prevents divergence and the results look as expected.
@@ -46,6 +52,8 @@ def integrate(S, t_max, h, params, method):
         S_abs = np.linalg.norm(S[i,:,:], axis=1)
         S[i,:,:] = np.divide(S[i,:], np.transpose(np.tile(S_abs, (3,1))))
         S[i+1,:,:] = method(S[i,:,:], h, params)
+    finish_time = time.time()
+    print(" Done in", finish_time - start_time, "seconds.")
     return S
 
 def heun_step(S, h, params):
@@ -115,3 +123,8 @@ def time_step(S, params):
             Sj_cross_H[1:-1] += 2*params.J*(np.cross(S[1:-1,:], S[0:-2,:] + S[2:,:]))
 
     return C * Sj_cross_H + params.alpha * np.cross(S[:,:], Sj_cross_H)
+
+def status_bar(i, N):
+    l = 30
+    progress = l*i//N
+    print("\r[" + "="*progress + ">" + " "*(l-progress) + "]", end="")

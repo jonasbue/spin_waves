@@ -18,11 +18,12 @@ def analytical_solution(init, params, time):
     omega_0 = ((params.gamma/params.mu) * (2*np.cos(theta_0) 
             + params.mu*params.B_0) *np.sin(theta_0))
 
-    print(time.shape)
-    # The 4.55 is set by hand (ad hoc) here.
-    # The amplitude is the important part.
-    phi = phi_0 - 4.55*omega_0*time # For RK4, use 9.0 instead.
-    print(phi.shape)
+    # To get the same phase of the analytical and comptued solutions,
+    # multiply omega by 4.55 here. For RK4, use 9.0 instead.
+    # This is very ad hoc, but the amplitude is the important part.
+    # The error analysis is independent of phase,
+    # so plots in phase space are unaffected by this.
+    phi = phi_0 - omega_0*time 
     sol = np.zeros((len(time), 3))
     sol[:,0] = np.sin(theta_0)*np.cos(phi[:])
     sol[:,1] = np.sin(theta_0)*np.sin(phi[:])

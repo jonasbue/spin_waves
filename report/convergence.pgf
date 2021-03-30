@@ -1,20 +1,21 @@
 \begin{tikzpicture}
 \begin{groupplot}[
     group style={
-        group name = covergence,
+        group name = convergence,
         group size = 2 by 1,
         vertical sep = 50 pt,
         ylabels at=edge left,
-        yticklabels at=edge left,
+        yticklabels at=all,
     },
     xlabel = N,
     ylabel = Numerical error,
+    width=0.6\linewidth,
     xmode = log,
     ymode = log,
-    separate axis lines,
-    width=0.6\linewidth,
+    yminorticks=true,
+    %x dir=reverse,
 ]
-\nextgroupplot 
+\nextgroupplot
     \addplot [
         mark = square*,
         %style = dotted,
@@ -28,7 +29,7 @@
     ] table [
         y = euler,
     ]{./data/errors.csv};
-    \addlegendentry{Euler's method}
+    \addlegendentry{Euler's method }
 
 \nextgroupplot [
     legend style={at={(0.02,0.02)}, anchor=south west},
