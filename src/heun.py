@@ -18,7 +18,7 @@ class EquationParameters:
     ksi     = np.array([0,0,0])     # Thermal noise.
                                     # Will probably stay zero.
 
-def heun(S, t_max, h, params):
+def integrate(S, t_max, h, params, method):
     """ Solves a differential equation using Heun's method.
         Arguments:
             n:          int. The number of spins (particles).
@@ -27,6 +27,9 @@ def heun(S, t_max, h, params):
             params:     EquationParameters. Class containing 
                         all parameters required by the time_step()
                         function.
+            method:     Function. The Runge-Kutta method to be used.
+                        Defaults ho heun(), which is required
+                        by the project description.
         Returns:
         S:      Array (1D). The spins of all particles.
     """
@@ -42,7 +45,7 @@ def heun(S, t_max, h, params):
         # TODO: Discuss with someone.
         S_abs = np.linalg.norm(S[i,:,:], axis=1)
         S[i,:,:] = np.divide(S[i,:], np.transpose(np.tile(S_abs, (3,1))))
-        S[i+1,:,:] = heun_step(S[i,:,:], h, params)
+        S[i+1,:,:] = method(S[i,:,:], h, params)
     return S
 
 def heun_step(S, h, params):
@@ -54,9 +57,29 @@ def heun_step(S, h, params):
         Return:
             S_new:  The next iteration of the spin array.
     """
+    # There is no explicit time dependence in the equation on motion.
+    # Therefore, only S and params are needed in time_step, not h.
     S_p = S + h*time_step(S, params)
     S_new = S + 0.5*h*(S_p + time_step(S_p, params))
     return S_new
+
+def euler_step(S, h, params):
+    """ Integrates using Euler's method."""
+    S_new = S + h*time_step(S, params)
+    return S_new
+
+def rk4_step(S, h, params):
+    """ Integrate using the classical Runge-Kutta method. """
+    # All the function calls could make this less efficinent
+    # than the lower order methods, 
+    # because potentially long arrays are used.
+    k1 = time_step(S, params)
+    k2 = time_step(S + 0.5*h*k1, params)
+    k3 = time_step(S + 0.5*h*k2, params)
+    k4 = time_step(S + h*k3, params)
+    S_new = S + (h/6)*(k1 + 2*k2 + 2*k3 + k4)
+    return S_new
+
 
 def time_step(S, params):
     """ Calculates a time step of the Heun method.

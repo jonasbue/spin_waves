@@ -1,8 +1,33 @@
 from heun import *
 from plotting import *
 from save import *
+from analysis import *
 
-def one_spin(S, params, t_max, h, plot=True, anim=False, save=False, analytical=False):
+
+def run_simulation(n, params, method, t_max=10, h=0.01, init="x", 
+    first_particle=np.array([]), plot=True, 
+    anim=False, save=False):
+    """ Runs simulation.
+        Arguments:
+            A lot.
+        Returns:
+            S: Spin array.
+    """
+    N = int(t_max//h) # Number of time steps
+    # Initialize S
+    S = make_S(init, n, N, first_particle=first_particle)
+    if n == 1:
+        one_spin(S, params, t_max, h, method,
+            plot=plot, anim=anim, save=save, analytical=True)
+    elif n > 1:
+        spin_chain(S, params, t_max, h, method,
+            plot=plot, anim=anim, save=save)
+    S = integrate(S, t_max, h, params, method)
+    return S
+
+
+def one_spin(S, params, t_max, h, method, plot=True, anim=False, 
+    save=False, analytical=False):
     """ Task 1. Modelling a single particle spin
         in a homogeneous B-field in the z-direction.
         Arguments:
@@ -12,7 +37,7 @@ def one_spin(S, params, t_max, h, plot=True, anim=False, save=False, analytical=
             t: Time array.
     """
     N = len(S)
-    S = heun(S, t_max, h, params)
+    S = integrate(S, t_max, h, params, method)
     t = np.linspace(0,t_max,N)
     an_sol = analytical_solution(S[0,0,:], params, t)
     if plot:
@@ -31,7 +56,8 @@ def one_spin(S, params, t_max, h, plot=True, anim=False, save=False, analytical=
     if save:
         # To avoid periods in file name, use a dash instead.
         a_str = str(params.alpha).replace(".", "-")
-        filename = f"../report/data/one_spin_alpha_{a_str}.csv"
+        method_name = method.__name__
+        filename = f"../report/data/one_spin_{method_name}_{N}_alpha_{a_str}.csv"
         if analytical:
             save_data(filename, S, t, an_sol)
         else:
@@ -39,9 +65,9 @@ def one_spin(S, params, t_max, h, plot=True, anim=False, save=False, analytical=
     return S, np.linspace(0,t_max,N)
 
 
-def spin_chain(S, params, t_max, h, plot=True, anim=False, save=False):
+def spin_chain(S, params, t_max, h, method, plot=True, anim=False, save=False):
     N = int(t_max//h)
-    S = heun(S, t_max, h, params)
+    S = integrate(S, t_max, h, params, method)
     if plot:
         plot_results(S, t_max, z=True)
         plt.show()
@@ -57,30 +83,7 @@ def spin_chain(S, params, t_max, h, plot=True, anim=False, save=False):
     return S, np.linspace(0,t_max,N)
     
 
-def error_analysis():
-    #TODO: Make this.
-    return 0 # Zero is a nice error.
 
-
-def run_simulation(n, params, t_max=10, h=0.01, init="x", 
-    first_particle=np.array([]), plot=True, anim=False, save=False):
-    """ Runs simulation.
-        Arguments:
-            A lot.
-        Returns:
-            S: Spin array.
-    """
-    N = int(t_max//h) # Number of time steps
-    # Initialize S
-    S = make_S(init, n, N, first_particle=first_particle)
-    if n == 1:
-        one_spin(S, params, t_max, h,
-            plot=plot, anim=anim, save=save, analytical=True)
-    elif n > 1:
-        spin_chain(S, params, t_max, h,
-            plot=plot, anim=anim, save=save)
-    S = heun(S, t_max, h, params)
-    return S
 
 
 def make_S(init, n, N, first_particle):
@@ -126,4 +129,29 @@ def make_S(init, n, N, first_particle):
     if first_particle.size:
         S[0,0,:] = first_particle
     return S
+
+def convergence_plot(init, params, method):
+    """ Makes a convergence plot. """
+    t_max = 20
+    all_N = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048]
+    #all_h = np.divide(t_max, all_N)
+    error = np.zeros(len(all_N))
+    for (i, N) in enumerate(all_N):
+        # Run the simulation for task 1 for all h.
+        time = np.linspace(0,t_max,N)
+        h = t_max/N
+        S = run_simulation(
+            1, params, t_max=t_max, h=h,
+            first_particle=np.array([0,0.1,0.9]),
+            plot=False,
+            method=method,
+        )
+        an_sol = analytical_solution(init, params, time)
+        error[i] = get_error(S[:,0,:], an_sol)
+    
+    plt.plot(all_N, error, marker="o", linestyle="--")
+    plt.xscale("log")
+    plt.yscale("log")
+    #plt.gca().invert_xaxis()
+    plt.title("Convergence plot")
 
