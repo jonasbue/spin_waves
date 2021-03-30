@@ -1,10 +1,12 @@
 \begin{tikzpicture}
 \begin{axis}[
     xlabel = N,
-    ylabel = Numerical error,
+    ylabel = {},
     xmode = log,
     ymode = log,
+    yticklabel pos = right,
     x dir=reverse,
+    legend style={at={(0.98,0.5)}, anchor=north east}
 ]
     \addplot [
         mark = square*,
@@ -20,5 +22,12 @@
         y = euler,
     ]{./data/errors.csv};
     \addlegendentry{Euler's method}
+    \addplot [
+        mark = triangle,
+        %style = dotted,
+    ] table [
+        y = rk4,
+    ]{./data/errors.csv};
+    \addlegendentry{Runge-Kutta 4}
 \end{axis}
 \end{tikzpicture}

@@ -1,6 +1,8 @@
 \documentclass{article}
+\usepackage[left=2.5cm, right=2.5cm]{geometry}
+\usepackage{caption}
+\usepackage{subcaption}
 \usepackage{pgfplots}
-\usepgfplotslibrary{groupplots}
 \usepgfplotslibrary{external}
 \tikzexternalize[prefix=figurecache/] 
 \pgfplotsset{compat = 1.17}
@@ -23,10 +25,20 @@
     \input{error_z.pgf}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htbp]
     \centering
-    % Whoah!
-    \input{convergence.pgf}
+    \begin{subfigure}[t]{0.4\textwidth}
+            \input{./convergence.pgf}
+        \label{fig:convergence_plot}
+        \caption{Convgergence plot showing the difference between Heun's method and Euler's method.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.4\textwidth}
+            \input{./convergence_all.pgf}
+        \label{fig:convergence_plot_all}
+        \caption{Convgergence plot in which the fourth order Runge-Kutta method is included in addition to Euler's and Heun's method.}
+    \end{subfigure}
+    \caption{Convergence plots. The figures clearly show that the classical Runge-Kutta method converges significantly faster than the other two methods. Considering runtimes, using this method with a larger step length is also beneficial. Regarding the two lower-order methods, the measured runtimes may ssuggest that Euler's method is actually more efficient than Heun's method.}
 \end{figure}
 
 \end{document}
