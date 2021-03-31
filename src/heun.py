@@ -102,7 +102,7 @@ def time_step(S, params):
             dtS:    The time derivative of S.
         
     """
-    C = params.gamma / (params.mu * (1 + params.alpha**2))
+    C = -params.gamma / (params.mu * (1 + params.alpha**2))
     Sj_cross_H = np.zeros(S.shape)
     Sz = np.transpose(np.tile(S[:,2], (3,1)))
 
@@ -123,7 +123,7 @@ def time_step(S, params):
         if len(S) >= 3:
             Sj_cross_H[1:-1] += 2*params.J*(np.cross(S[1:-1,:], S[0:-2,:] + S[2:,:]))
 
-    return C * Sj_cross_H + params.alpha * np.cross(S[:,:], Sj_cross_H)
+    return C * (Sj_cross_H + params.alpha * np.cross(S[:,:], Sj_cross_H))
 
 def status_bar(i, N):
     l = 30

@@ -15,7 +15,7 @@ def analytical_solution(init, params, time):
     x, y, z = init
     phi_0 = np.arctan(y/x)
     theta_0 = np.arccos(z/np.linalg.norm(init))
-    omega_0 = ((params.gamma/params.mu) * (2*np.cos(theta_0) 
+    omega_0 = - ((params.gamma/params.mu) * (2*np.cos(theta_0) 
             + params.mu*params.B_0) *np.sin(theta_0))
 
     # To get the same phase of the analytical and comptued solutions,
@@ -23,7 +23,7 @@ def analytical_solution(init, params, time):
     # This is very ad hoc, but the amplitude is the important part.
     # The error analysis is independent of phase,
     # so plots in phase space are unaffected by this.
-    phi = phi_0 - omega_0*time 
+    phi = phi_0 + omega_0*time 
     sol = np.zeros((len(time), 3))
     sol[:,0] = np.sin(theta_0)*np.cos(phi[:])
     sol[:,1] = np.sin(theta_0)*np.sin(phi[:])
