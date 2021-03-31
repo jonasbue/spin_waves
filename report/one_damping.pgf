@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        black,
+        xlabel = $x$,
+        ylabel = $y$,
+    ]
+        \addplot table [
+            mark=none,
+            x = x0,
+            y = y0,
+        ]{./data/one_spin_heun_step_29999_alpha_0-05.csv};
+    \end{axis}
+\end{tikzpicture}
