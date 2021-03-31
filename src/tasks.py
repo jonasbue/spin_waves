@@ -11,10 +11,14 @@ def task_1():
 
     # Second, perform an error analysis.
     # Do not run this. It takes half an hour.
+    # TODO: Run this again. I found a mistake..
     #one_tilted_error(params, S_init)
 
     # Third, include damping.
-    #one_tilted_damping(params)
+    # This ends up rotating in the xy-plane,
+    # but I expected it to stop along the z-axis.
+    # Ask someone.
+    one_tilted_damping(S_init, params)
 
 
 def task_2():
@@ -42,10 +46,12 @@ def task_2():
 def one_tilted(params):
     for method in [heun_step, euler_step, rk4_step][0]:
         S = run_simulation(
-            1, params, t_max=30, h=0.01,
+            1, params, t_max=40, h=0.01,
             first_particle=S_init, 
             plot=True,
             save=True,
+            anim=False,
+            analytical=False,
             method=method)
 
 
@@ -59,12 +65,15 @@ def one_tilted_error(params, S_init):
     save_errors("../report/data/new_errors.csv", errors, h_arr, methods)
     plt.show()
 
-def one_tilted_damping(params):
+def one_tilted_damping(S_init, params):
     params.alpha=0.05
+    params.d_z=0.5
     S = run_simulation(
         1, params, t_max=30, h=0.01,
         first_particle=S_init, 
         plot=True,
         save=True,
+        anim=False,
+        analytical=False,
         method=heun_step)
-
+    

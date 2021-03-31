@@ -6,7 +6,7 @@ from analysis import *
 
 def run_simulation(n, params, method, t_max=10, h=0.01, init="x", 
     first_particle=np.array([]), plot=True, 
-    anim=False, save=False):
+    anim=False, save=False, analytical=True):
     """ Runs simulation.
         Arguments:
             A lot.
@@ -18,7 +18,7 @@ def run_simulation(n, params, method, t_max=10, h=0.01, init="x",
     S = make_S(init, n, N, first_particle=first_particle)
     if n == 1:
         S, time = one_spin(S, params, t_max, h, method,
-            plot=plot, anim=anim, save=save, analytical=True)
+            plot=plot, anim=anim, save=save, analytical=analytical)
     elif n > 1:
         S, time = spin_chain(S, params, t_max, h, method,
             plot=plot, anim=anim, save=save)
@@ -26,7 +26,7 @@ def run_simulation(n, params, method, t_max=10, h=0.01, init="x",
 
 
 def one_spin(S, params, t_max, h, method, plot=True, anim=False, 
-    save=False, analytical=False):
+    save=False, analytical=True):
     """ Task 1. Modelling a single particle spin
         in a homogeneous B-field in the z-direction.
         Arguments:
@@ -48,7 +48,8 @@ def one_spin(S, params, t_max, h, method, plot=True, anim=False,
             plt.legend()
         plt.show()
         phase_plot(S, 0, 1)
-        plt.plot(an_sol[:,0], an_sol[:,1], linestyle="--", label="Analytical")
+        if analytical:
+            plt.plot(an_sol[:,0], an_sol[:,1], linestyle="--", label="Analytical")
         plt.show()
     if anim:
         plot_3d(S)

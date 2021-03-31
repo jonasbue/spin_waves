@@ -67,8 +67,9 @@ def heun_step(S, h, params):
     """
     # There is no explicit time dependence in the equation on motion.
     # Therefore, only S and params are needed in time_step, not h.
-    S_p = S + h*time_step(S, params)
-    S_new = S + 0.5*h*(S_p + time_step(S_p, params))
+    dS = time_step(S, params)
+    S_p = S + h*dS
+    S_new = S + 0.5*h*(dS + time_step(S_p, params))
     return S_new
 
 def euler_step(S, h, params):

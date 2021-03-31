@@ -15,7 +15,7 @@ def plot_3d(S):
     w = S[:,:,2]
 
     fig = mlab.quiver3d(u[0], v[0], w[0], scale_factor=1)
-    @mlab.animate(delay=100)
+    @mlab.animate(delay=10)
     def anim():
         for i in range(n):
             fig.mlab_source.set(u=u[i], v=v[i], w=w[i])
