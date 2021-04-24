@@ -1,3 +1,6 @@
-figurecache/report-figure4.pdf: ./data/errors.csv
-figurecache/report-figure4.pdf: ./data/errors.csv
-figurecache/report-figure4.pdf: ./data/errors.csv
+figurecache/report-figure4.pdf: ./data/2999_spins_magnon_random_alpha_0-05.csv
+figurecache/report-figure4.pdf: ./data/2999_spins_magnon_random_alpha_0-05.csv
+figurecache/report-figure4.pdf: ./data/2999_spins_magnon_random_alpha_0-05.csv
+figurecache/report-figure4.pdf: ./data/2999_spins_magnon_random_alpha_0-05.csv
+figurecache/report-figure4.pdf: ./data/2999_spins_magnon_random_alpha_0-05.csv
+figurecache/report-figure4.pdf: ./data/2999_spins_magnon_random_alpha_0-05.csv

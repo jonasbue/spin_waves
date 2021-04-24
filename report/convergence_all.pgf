@@ -6,28 +6,28 @@
     ymode = log,
     yticklabel pos = right,
     x dir=reverse,
-    legend style={at={(0.98,0.5)}, anchor=north east}
+    legend style={at={(0.98,0.98)}, anchor=north east}
 ]
     \addplot [
         mark = square*,
         %style = dotted,
     ] table [
         y = heun,
-    ]{./data/errors.csv};
+    ]{./data/new_errors.csv};
     \addlegendentry{Heun's method}
     \addplot [
         mark = o,
         %style = dotted,
     ] table [
         y = euler,
-    ]{./data/errors.csv};
+    ]{./data/new_errors.csv};
     \addlegendentry{Euler's method}
     \addplot [
         mark = triangle,
         %style = dotted,
     ] table [
         y = rk4,
-    ]{./data/errors.csv};
+    ]{./data/new_errors.csv};
     \addlegendentry{Runge-Kutta 4}
 \end{axis}
 \end{tikzpicture}

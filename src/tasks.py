@@ -10,8 +10,7 @@ def task_1():
     #one_tilted(params)
     # Second, perform an error analysis.
     # Do not run this. It takes half an hour.
-    # TODO: Run this again. I found a mistake..
-    #one_tilted_error(params, S_init)
+    one_tilted_error(params, S_init)
     # Third, include damping.
     # TODO: Implement curve fitting here.
     one_tilted_damping(S_init, params)

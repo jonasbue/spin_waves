@@ -27,17 +27,17 @@
 
 \begin{figure}[htbp]
     \centering
-    \begin{subfigure}[t]{0.4\textwidth}
-            \input{./convergence.pgf}
-        \label{fig:convergence_plot}
-        \caption{Convgergence plot showing the difference between Heun's method and Euler's method.}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.4\textwidth}
+    %\begin{subfigure}[t]{0.4\textwidth}
+    %        \input{./convergence.pgf}
+    %    \label{fig:convergence_plot}
+    %    \caption{Convgergence plot showing the difference between Heun's method and Euler's method.}
+    %\end{subfigure}
+    %\hfill
+    %\begin{subfigure}[t]{0.4\textwidth}
             \input{./convergence_all.pgf}
         \label{fig:convergence_plot_all}
         \caption{Convgergence plot in which the fourth order Runge-Kutta method is included in addition to Euler's and Heun's method.}
-    \end{subfigure}
+    %\end{subfigure}
     \caption{Convergence plots. The figures clearly show that the classical Runge-Kutta method converges significantly faster than the other two methods. Considering runtimes, using this method with a larger step length is also beneficial. Regarding the two lower-order methods, the measured runtimes may ssuggest that Euler's method is actually more efficient than Heun's method.}
 \end{figure}
 
