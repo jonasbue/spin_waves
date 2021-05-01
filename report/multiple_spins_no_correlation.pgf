@@ -1,0 +1,88 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        title={10 spins with random directions and no damping},
+        xlabel = $x $,
+        ylabel = $y$,
+    ]
+        \addplot[
+            %color=black,
+            style=solid,
+		] table [
+            mark=none,
+            x = x0,
+            y = y0,
+        ]{./data/10_spins_random_no_coupling_alpha_0-0.csv};
+        \addplot[
+            %color=black,
+            style=solid,
+		] table [
+            mark=none,
+            x = x1,
+            y = y1,
+        ]{./data/10_spins_random_no_coupling_alpha_0-0.csv};
+        \addplot[
+            %color=black,
+            style=solid,
+		] table [
+            mark=none,
+            x = x2,
+            y = y2,
+        ]{./data/10_spins_random_no_coupling_alpha_0-0.csv};
+        \addplot[
+            %color=black,
+            style=solid,
+		] table [
+            mark=none,
+            x = x3,
+            y = y3,
+        ]{./data/10_spins_random_no_coupling_alpha_0-0.csv};
+        \addplot[
+            %color=black,
+            style=solid,
+		] table [
+            mark=none,
+            x = x4,
+            y = y4,
+        ]{./data/10_spins_random_no_coupling_alpha_0-0.csv};
+        \addplot[
+            %color=black,
+            style=solid,
+		] table [
+            mark=none,
+            x = x5,
+            y = y5,
+        ]{./data/10_spins_random_no_coupling_alpha_0-0.csv};
+        \addplot[
+            %color=black,
+            style=solid,
+		] table [
+            mark=none,
+            x = x6,
+            y = y6,
+        ]{./data/10_spins_random_no_coupling_alpha_0-0.csv};
+        \addplot[
+            %color=black,
+            style=solid,
+		] table [
+            mark=none,
+            x = x7,
+            y = y7,
+        ]{./data/10_spins_random_no_coupling_alpha_0-0.csv};
+        \addplot[
+            %color=black,
+            style=solid,
+		] table [
+            mark=none,
+            x = x8,
+            y = y8,
+        ]{./data/10_spins_random_no_coupling_alpha_0-0.csv};
+        \addplot[
+            %color=black,
+            style=solid,
+		] table [
+            mark=none,
+            x = x9,
+            y = y9,
+        ]{./data/10_spins_random_no_coupling_alpha_0-0.csv};
+    \end{axis}
+\end{tikzpicture}

@@ -51,5 +51,7 @@ def phase_plot(S, x, y):
     """
     N = len(S)
     plt.plot(S[:,:,x], S[:,:,y], label="Spin")
+    plt.xlabel("x")
+    plt.xlabel("y")
     plt.legend()
     plt.title("Phase plot")

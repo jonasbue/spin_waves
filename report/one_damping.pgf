@@ -1,13 +1,26 @@
-\begin{tikzpicture}
+\begin{tikzpicture}%[width=0.8\linewidth]
     \begin{axis}[
-        black,
+        title={One spin with damping},
         xlabel = $x$,
         ylabel = $y$,
+        legend pos=south east,
     ]
-        \addplot table [
+        \addplot [
+            color = black,
+        ] table [
             mark=none,
             x = x0,
             y = y0,
-        ]{./data/one_spin_heun_step_29999_alpha_0-05.csv};
+        ]{./data/one_spin_heun_step_2999_alpha_0-05.csv};
+        \addlegendentry{Damped}
+        \addplot [
+            style=dashed,
+            color = black,
+        ] table [
+            mark=none,
+            x = analytical_x0,
+            y = analytical_y0,
+        ]{./data/one_spin_alpha_0-0.csv};
+        \addlegendentry{Not damped}
     \end{axis}
 \end{tikzpicture}

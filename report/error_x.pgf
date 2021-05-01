@@ -1,20 +1,23 @@
-\begin{tikzpicture}
+\begin{tikzpicture}%[width=0.8\linwidth]
     \begin{axis}[
-        black,
-        xlabel = t,
-        ylabel = Spin amplitude,
+        title={One spin, seen from above},
+        %black,
+        xlabel = $x$,
+        ylabel = $y$,
     ]
         \addplot [
             mark = none,
         ] table [
-            y = x0,
+            x = x0,
+            y = y0,
         ]{./data/one_spin_alpha_0-0.csv};
         \addlegendentry{Computed}
         \addplot [
             mark = none,
             style = dotted,
         ] table [
-            y = analytical_x0,
+            x = analytical_x0,
+            y = analytical_y0,
         ]{./data/one_spin_alpha_0-0.csv};
         \addlegendentry{Analytical}
     \end{axis}

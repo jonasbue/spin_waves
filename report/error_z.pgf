@@ -1,8 +1,9 @@
 \begin{tikzpicture}
     \begin{axis}[
+        title={Amplitude in $z$-direction},
         black,
-        xlabel = t,
-        ylabel = Spin amplitude,
+        xlabel = $t$,
+        ylabel = $z$,
         ymin=0,
         ymax=1.5
     ]

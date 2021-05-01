@@ -1,8 +1,9 @@
 \begin{tikzpicture}
     \begin{axis}[
+        title={Numerical vs. Analytical solution},
         black,
-        xlabel = t,
-        ylabel = Spin amplitude,
+        xlabel = $t$,
+        ylabel = $y$,
     ]
         \addplot [
             mark = none,

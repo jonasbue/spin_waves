@@ -77,14 +77,12 @@ def spin_chain(S, params, t_max, h, method, savename, plot=False, anim=False, sa
     if anim:
         plot_3d(S)
     if save:
+        n = len(S[0]) # Number of spins
         # To avoid periods in file name, use a dash instead.
         a_str = str(params.alpha).replace(".", "-")
-        filename = f"../report/data/{N}_spins_{savename}_alpha_{a_str}.csv"
+        filename = f"../report/data/{n}_spins_{savename}_alpha_{a_str}.csv"
         save_data(filename, S, time)
     return S, time
-    
-
-
 
 
 def make_S(init, n, N, first_particle):

@@ -1,6 +1,6 @@
 \begin{tikzpicture}
     \begin{axis}[
-        title={Random initial directions, $J = -1$},
+        title = {Magnon, $J = -1, \, \alpha = 0.05$},
         xlabel = $t$,
         ylabel = $z$,
     ]
@@ -8,46 +8,46 @@
             mark=none,
             x = t,
             y = z0,
-        ]{./data/10_spins_random_antiferro_alpha_0-05.csv};
+        ]{./data/10_spins_magnon_antiferro_alpha_0-05.csv};
         \addplot table [
             mark=none,
             y = z1,
-        ]{./data/10_spins_random_antiferro_alpha_0-05.csv};
+        ]{./data/10_spins_magnon_antiferro_alpha_0-05.csv};
         \addplot table [
             mark=none,
             y = z2,
-        ]{./data/10_spins_random_antiferro_alpha_0-05.csv};
+        ]{./data/10_spins_magnon_antiferro_alpha_0-05.csv};
         \addplot table [
             mark=none,
             y = z3,
-        ]{./data/10_spins_random_antiferro_alpha_0-05.csv};
+        ]{./data/10_spins_magnon_antiferro_alpha_0-05.csv};
         \addplot table [
             mark=none,
             y = z4,
-        ]{./data/10_spins_random_antiferro_alpha_0-05.csv};
+        ]{./data/10_spins_magnon_antiferro_alpha_0-05.csv};
         \addplot table [
             mark=none,
             y = z5,
-        ]{./data/10_spins_random_antiferro_alpha_0-05.csv};
+        ]{./data/10_spins_magnon_antiferro_alpha_0-05.csv};
         \addplot table [
             mark=none,
             y = z6,
-        ]{./data/10_spins_random_antiferro_alpha_0-05.csv};
+        ]{./data/10_spins_magnon_antiferro_alpha_0-05.csv};
         \addplot table [
             mark=none,
             y = z7,
-        ]{./data/10_spins_random_antiferro_alpha_0-05.csv};
+        ]{./data/10_spins_magnon_antiferro_alpha_0-05.csv};
         \addplot table [
             mark=none,
             y = z7,
-        ]{./data/10_spins_random_antiferro_alpha_0-05.csv};
+        ]{./data/10_spins_magnon_antiferro_alpha_0-05.csv};
         \addplot table [
             mark=none,
             y = z8,
-        ]{./data/10_spins_random_antiferro_alpha_0-05.csv};
+        ]{./data/10_spins_magnon_antiferro_alpha_0-05.csv};
         \addplot table [
             mark=none,
             y = z9,
-        ]{./data/10_spins_random_antiferro_alpha_0-05.csv};
+        ]{./data/10_spins_magnon_antiferro_alpha_0-05.csv};
     \end{axis}
 \end{tikzpicture}
