@@ -1,0 +1,64 @@
+\begin{tikzpicture}%[width=0.8\linewidth]
+    \centering
+    \begin{groupplot}[
+    group style={
+        group name = task_4,
+        group size = 2 by 1,
+        horizontal sep=5pt,
+        ylabels at=edge left,
+        yticklabels at=edge left,
+    },
+    width=0.58\linewidth,
+    height=0.58\linewidth,
+    separate axis lines,
+    xlabel={$t$},
+    ylabel={Amplitude ($x$)},
+]
+    \nextgroupplot[
+        title = {$\alpha = 0.1$}
+    ]
+        \addplot [
+            color = black,
+        ] table [
+            mark=none,
+            x = t,
+            y = x0,
+        ]{./data/one_spin_damping_heun_step_2999_alpha_0-1.csv};
+        \addlegendentry{Damped}
+        \addplot [
+            style=dashed,
+            color = black,
+        ] table [
+            mark=none,
+            y expr = {0.1*exp(-\thisrow{t}*(0.1*30/13)},
+        ]{./data/one_spin_damping_heun_step_2999_alpha_0-1.csv};
+        \addlegendentry{$\exp(-t/\tau)$}
+    \nextgroupplot[
+        title = {$\alpha = 0.2$}
+    ]
+        \addplot [
+            color = black,
+        ] table [
+            mark=none,
+            x = t,
+            y = x0,
+        ]{./data/one_spin_damping_heun_step_2999_alpha_0-2.csv};
+        \addlegendentry{Damped}
+        \addplot [
+            style=dashed,
+            color = black,
+        ] table [
+            mark=none,
+            y expr = {0.1*exp(-\thisrow{t}*(0.2*30/13)},
+        ]{./data/one_spin_damping_heun_step_2999_alpha_0-2.csv};
+        \addlegendentry{$\exp(-t/\tau)$}
+    \end{groupplot}
+    \begin{axis}[
+        title={Varying the damping},
+        %xlabel = $t$,
+        %ylabel = {Amplitude ($x$)},
+        hide x axis,
+        hide y axis,
+    ]
+    \end{axis}
+\end{tikzpicture}

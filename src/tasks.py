@@ -10,7 +10,7 @@ def task_1():
     #one_tilted(params)
     # Second, perform an error analysis.
     # Do not run this. It takes half an hour.
-    one_tilted_error(params, S_init)
+    ###one_tilted_error(params, S_init)
     # Third, include damping.
     # TODO: Implement curve fitting here.
     one_tilted_damping(S_init, params)
@@ -60,16 +60,18 @@ def one_tilted_error(params, S_init):
     plt.show()
 
 def one_tilted_damping(S_init, params):
-    params.alpha=0.05
-    params.d_z=0.5
-    S = run_simulation(
-        1, params, t_max=30, h=0.01,
-        first_particle=S_init, 
-        plot=True,
-        save=True,
-        anim=False,
-        analytical=False,
-        method=heun_step)
+    for alpha in [0.05, 0.1, 0.2]:
+        params.alpha=alpha
+        params.d_z=0.5
+        S = run_simulation(
+            1, params, t_max=30, h=0.01,
+            first_particle=S_init, 
+            plot=True,
+            save=True,
+            anim=True,
+            analytical=False,
+            method=heun_step,
+            savename="damping")
     
 
 def chain_ground_state(n, params, J):

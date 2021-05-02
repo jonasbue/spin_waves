@@ -1,0 +1,25 @@
+\begin{tikzpicture}%[width=0.8\linewidth]
+    \begin{axis}[
+        title={One spin, $\alpha = 0.05, \, \omega = 30/13 \approx 2.3$},
+        xlabel = $t$,
+        ylabel = {Amplitude ($x$)},
+        legend pos=south east,
+    ]
+        \addplot [
+            color = black,
+        ] table [
+            mark=none,
+            x = t,
+            y expr = {\thisrow{x0}},
+        ]{./data/one_spin_heun_step_2999_alpha_0-05.csv};
+        \addlegendentry{Damped}
+        \addplot [
+            style=dashed,
+            color = black,
+        ] table [
+            mark=none,
+            y expr = {0.1*exp(-\thisrow{t}*(0.05*30/13)},
+        ]{./data/one_spin_heun_step_2999_alpha_0-05.csv};
+        \addlegendentry{$\exp(-t/\tau)$}
+    \end{axis}
+\end{tikzpicture}
