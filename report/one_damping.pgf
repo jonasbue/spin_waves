@@ -1,6 +1,6 @@
 \begin{tikzpicture}%[width=0.8\linewidth]
     \begin{axis}[
-        title={One spin with damping},
+        title={One spin, $\alpha = 0.05$},
         xlabel = $x$,
         ylabel = $y$,
         legend pos=south east,

@@ -5,8 +5,8 @@ from analysis import *
 
 
 def run_simulation(n, params, method, t_max=10, h=0.01, init="x", 
-    first_particle=np.array([]), plot=True, 
-    anim=False, save=False, analytical=True, savename=""):
+    first_particle=np.array([]), periodic_bc=False,
+    plot=False, anim=False, save=False, analytical=True, savename=""):
     """ Runs simulation.
         Arguments:
             A lot.
@@ -17,16 +17,17 @@ def run_simulation(n, params, method, t_max=10, h=0.01, init="x",
     # Initialize S
     S = make_S(init, n, N, first_particle=first_particle)
     if n == 1:
-        S, time = one_spin(S, params, t_max, h, method, savename,
-            plot=plot, anim=anim, save=save, analytical=analytical)
+        S, time = one_spin(S, params, t_max, h, 
+        method, periodic_bc, savename, plot=plot, 
+        anim=anim, save=save, analytical=analytical)
     elif n > 1:
-        S, time = spin_chain(S, params, t_max, h, method, savename,
-            plot=plot, anim=anim, save=save)
+        S, time = spin_chain(S, params, t_max, h, method, 
+        periodic_bc, savename, plot=plot, anim=anim, save=save)
     return S
 
 
-def one_spin(S, params, t_max, h, method, savename, plot=True, anim=False, 
-    save=False, analytical=True):
+def one_spin(S, params, t_max, h, method, periodic_bc, savename,  
+    plot=True, anim=False, save=False, analytical=True):
     """ Task 1. Modelling a single particle spin
         in a homogeneous B-field in the z-direction.
         Arguments:
@@ -36,7 +37,7 @@ def one_spin(S, params, t_max, h, method, savename, plot=True, anim=False,
             t: Time array.
     """
     N = len(S)
-    S = integrate(S, t_max, h, params, method)
+    S = integrate(S, t_max, h, params, method, periodic_bc)
     t = np.linspace(0,t_max,N)
     an_sol = analytical_solution(S[0,0,:], params, t)
     if plot:
@@ -65,9 +66,10 @@ def one_spin(S, params, t_max, h, method, savename, plot=True, anim=False,
     return S, np.linspace(0,t_max,N)
 
 
-def spin_chain(S, params, t_max, h, method, savename, plot=False, anim=False, save=False):
+def spin_chain(S, params, t_max, h, method, periodic_bc, savename, 
+    plot=False, anim=False, save=False):
     N = int(t_max//h)
-    S = integrate(S, t_max, h, params, method)
+    S = integrate(S, t_max, h, params, method, periodic_bc)
     time = np.linspace(0,t_max,N)
     if plot:
         plot_results(S, t_max, z=True)

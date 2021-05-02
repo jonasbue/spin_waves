@@ -19,7 +19,7 @@ class EquationParameters:
     ksi     = np.array([0,0,0])     # Thermal noise.
                                     # Will probably stay zero.
 
-def integrate(S, t_max, h, params, method):
+def integrate(S, t_max, h, params, method, periodic_bc):
     """ Solves a differential equation using Heun's method.
         Arguments:
             n:          int. The number of spins (particles).
@@ -51,12 +51,12 @@ def integrate(S, t_max, h, params, method):
         # TODO: Discuss with someone.
         S_abs = np.linalg.norm(S[i,:,:], axis=1)
         S[i,:,:] = np.divide(S[i,:], np.transpose(np.tile(S_abs, (3,1))))
-        S[i+1,:,:] = method(S[i,:,:], h, params)
+        S[i+1,:,:] = method(S[i,:,:], h, params, periodic_bc)
     finish_time = time.time()
     print(" Done in", finish_time - start_time, "seconds.")
     return S
 
-def heun_step(S, h, params):
+def heun_step(S, h, params, periodic_bc):
     """ Iterates one step of the Heun method.
         Arguments:
             S:      Spin array for one point in time (such as S[i,:,:]).
@@ -67,37 +67,37 @@ def heun_step(S, h, params):
     """
     # There is no explicit time dependence in the equation on motion.
     # Therefore, only S and params are needed in time_step, not h.
-    dS = time_step(S, params)
+    dS = time_step(S, params, periodic_bc)
     S_p = S + h*dS
-    S_new = S + 0.5*h*(dS + time_step(S_p, params))
+    S_new = S + 0.5*h*(dS + time_step(S_p, params, periodic_bc))
     return S_new
 
-def euler_step(S, h, params):
+def euler_step(S, h, params, periodic_bc):
     """ Integrates using Euler's method."""
-    S_new = S + h*time_step(S, params)
+    S_new = S + h*time_step(S, params, periodic_bc)
     return S_new
 
-def rk4_step(S, h, params):
+def rk4_step(S, h, params, periodic_bc):
     """ Integrate using the classical Runge-Kutta method. """
     # All the function calls could make this less efficinent
     # than the lower order methods, 
     # because potentially long arrays are used.
-    k1 = time_step(S, params)
-    k2 = time_step(S + 0.5*h*k1, params)
-    k3 = time_step(S + 0.5*h*k2, params)
-    k4 = time_step(S + h*k3, params)
+    k1 = time_step(S, params, periodic_bc)
+    k2 = time_step(S + 0.5*h*k1, params, periodic_bc)
+    k3 = time_step(S + 0.5*h*k2, params, periodic_bc)
+    k4 = time_step(S + h*k3, params, periodic_bc)
     S_new = S + (h/6)*(k1 + 2*k2 + 2*k3 + k4)
     return S_new
 
 
-def time_step(S, params):
+def time_step(S, params, periodic_bc):
     """ Calculates a time step of the Heun method.
         This function is specific for one particular equation of motion.
         Arguments:
-            S:      Spin array for one point in time.
-            h:      Step length in time.
-            params: EquationParameters. Hold parameters for the
-                    equation of mortion.
+            S:              Spin array for one point in time.
+            params:         EquationParameters. Hold parameters for the
+                            equation of mortion.
+            periodic_bc:    If True, the first and last spin will be coupled.
         Returns:
             dtS:    The time derivative of S.
         
@@ -115,14 +115,25 @@ def time_step(S, params):
     # Next we add a correlation term.
     # The end points only depend on one other point, so we handle
     # the correlation term separately for those.
-    # If n = 1 or J = 0, then there is not correlation. 
+    # If n = 1 or J = 0, then there is no correlation. 
     if len(S) > 1:
         Sj_cross_H[0] += 2*params.J*np.cross(S[0,:], S[1,:])
         Sj_cross_H[-1] += 2*params.J*np.cross(S[-1,:], S[-2,:])
+        # Next, if boundary conditions are periodic,
+        # between the first and last spin.
+        if periodic_bc:
+            # Periodic boundary conditions can go one or two ways,
+            # but the physical implications require attention
+            # in both cases. In any case:
+            #
+            # This is coupling from the last to the first spin:
+            Sj_cross_H[0] += 2*params.J*np.cross(S[0,:], S[-1,:])
+            #
+            # ... and this is coupling from the first to the last:
+            #Sj_cross_H[-1] += 2*params.J*np.cross(S[-1,:], S[0,:])
         # Lastly, we add de correlation term for the remaining points.
         if len(S) >= 3:
             Sj_cross_H[1:-1] += 2*params.J*(np.cross(S[1:-1,:], S[0:-2,:] + S[2:,:]))
-
     return C * (Sj_cross_H + params.alpha * np.cross(S[:,:], Sj_cross_H))
 
 def status_bar(i, N):

@@ -45,6 +45,7 @@
 % 1: Tilt the spin
 
 \begin{frame}
+    \frametitle{Simplest case}
 \begin{figure}
     \centering
     \input{error_y.pgf}
@@ -53,6 +54,7 @@
 \end{figure}
 \end{frame}
 \begin{frame}
+    \frametitle{Simplest case}
 \begin{figure}
     \centering
     \input{error_z.pgf}
@@ -61,6 +63,7 @@
 \end{figure}
 \end{frame}
 \begin{frame}
+    \frametitle{Phase space}
 \begin{figure}
     \centering
     \input{error_x.pgf}
@@ -71,6 +74,7 @@
 
 % 2: Error analysis
 \begin{frame}
+    \frametitle{Convergence plot}
 \begin{figure}[htbp]
     \centering
     \input{./convergence_all.pgf}
@@ -82,13 +86,15 @@
 % 3: Damping
 % TODO: Analyze exponential behaviour.
 \begin{frame}
-\begin{figure}
+    \frametitle{With damping}
+    \begin{figure}
     \centering
     \input{./one_damping.pgf}
 \end{figure}
 \end{frame}
 
 \begin{frame}
+    \frametitle{Analyzing the damping}
 \begin{figure}
     \centering
     \input{./one_damping_exp.pgf}
@@ -96,6 +102,7 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Varying $\alpha$}
 \begin{figure}
     \centering
     \input{./one_damping_exp_2.pgf}
@@ -118,6 +125,7 @@
 % 2.2.1: Ground states. Random initial directions.
 
 \begin{frame}
+    \frametitle{Ferromagnetic coupling}
 \begin{figure}
     \centering
     \input{./chain_random_ferro.pgf}
@@ -125,6 +133,7 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Antiferromagnetic coupling}
 \begin{figure}
     \centering
     \input{./chain_random_antiferro.pgf}
@@ -132,9 +141,17 @@
 \end{frame}
 
 % 2.2.2: Magnons. 
+\begin{frame}
+    \vfill
+    \centering
+    \usebeamerfont{title}
+    Magnons
+    \vfill
+\end{frame}
 
 % 1: No coupling. All spins rotate independently.
 \begin{frame}
+    \frametitle{No coupling}
 \begin{figure}
     \centering
     \input{./multiple_spins_no_correlation.pgf}
@@ -143,9 +160,24 @@
 
 % 2: Ferromagnetic coupling. A magnon propagating.
 \begin{frame}
+    \frametitle{No damping}
 \begin{figure}
     \centering
     \input{./magnon_ferro.pgf}
+\end{figure}
+\end{frame}
+\begin{frame}
+    \frametitle{For small $t$}
+\begin{figure}
+    \centering
+    \input{./magnon_ferro_some.pgf}
+\end{figure}
+\end{frame}
+\begin{frame}
+    \frametitle{For large $t$}
+\begin{figure}
+    \centering
+    \input{./magnon_ferro_some_later.pgf}
 \end{figure}
 \end{frame}
 
@@ -153,6 +185,7 @@
 
 % 4: Magnons with damping.
 \begin{frame}
+    \frametitle{With damping}
 \begin{figure}
     \centering
     \input{./magnon_ferro_damped.pgf}
@@ -161,6 +194,14 @@
 
 % 5: Magnons with antiferromagnetic coupling.
 \begin{frame}
+    \vfill
+    \centering
+    \usebeamerfont{title}
+    Magnons in antiferromagnetic chain
+    \vfill
+\end{frame}
+\begin{frame}
+    \frametitle{No damping}
 \begin{figure}
     \centering
     \input{./magnon_antiferro.pgf}
@@ -168,6 +209,7 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{With damping}
 \begin{figure}
     \centering
     \input{./magnon_antiferro_damped.pgf}

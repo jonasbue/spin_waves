@@ -54,7 +54,7 @@
         \addlegendentry{$\exp(-t/\tau)$}
     \end{groupplot}
     \begin{axis}[
-        title={Varying the damping},
+        %title={Varying the damping},
         %xlabel = $t$,
         %ylabel = {Amplitude ($x$)},
         hide x axis,

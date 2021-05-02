@@ -19,11 +19,11 @@ def task_1():
 def task_2():
     n = 10
     t_max = 50
-    h = 0.01
+    h = 0.001
     N = int(t_max//h)
     params = EquationParameters()
     # First, the ground state.
-    J = 0.5
+    J = 1
     # Positive J
     #print("Chain, ground state")
     #chain_ground_state(n, params, J)
@@ -31,7 +31,7 @@ def task_2():
     #chain_ground_state(n, params, -J)
     # Second, mangnons.
     print("Chain, magnons.")
-    t_max = 30
+    t_max = 100
     save=True
     anim=False
     magnons(n, params, J, t_max, save, anim)
@@ -79,7 +79,8 @@ def chain_ground_state(n, params, J):
     params.B_0 = 0.0
     params.alpha = 0.05
     params.J = J
-    S = run_simulation(n, params, heun_step, t_max=30, anim=True, init="random")
+    S = run_simulation(n, params, heun_step, t_max=30, 
+        periodic_bc=False, anim=True, init="random")
 
 
 def magnons(n, params, J, t_max, save, anim):
@@ -102,8 +103,14 @@ def magnons(n, params, J, t_max, save, anim):
     # First particle is tilted, all others along z.
     # This is a test, and will not be plotted in the report. Right?
     print("One tilted, with correlation.")
-    S = run_simulation(n, params, heun_step, t_max=t_max, save=save, anim=anim, init="z",
+    S = run_simulation(n, params, heun_step, t_max=t_max, 
+        periodic_bc=False, save=True, anim=anim, init="z",
         first_particle=np.array([0,1,1]), savename="magnon_ferro")
+
+    print("One tilted, with correlation and periodic BCs.")
+    S = run_simulation(n, params, heun_step, t_max=t_max, 
+        periodic_bc=True, save=True, anim=anim, init="z",
+        first_particle=np.array([0,1,1]), savename="magnon_ferro_periodic")
 
     # Now, set alpha > 0
     params.alpha = 0.05
@@ -127,15 +134,15 @@ def magnons(n, params, J, t_max, save, anim):
     # Random, all tilted and one tilted are of interest here.
     print("Random directions, with damping and negative correlation.")
     S = run_simulation(n, params, heun_step, t_max=t_max, save=save, anim=anim, init="random", savename="random_antiferro")
-    #print("All tilted, with damping and negative correlation.")
-    #S = run_simulation(n, params, heun_step, t_max=t_max, save=save, anim=anim, init="z_tilt", savename="magnon_all_tilted_antiferro")
+    print("All tilted, with damping and negative correlation.")
+    S = run_simulation(n, params, heun_step, t_max=2*t_max, save=save, anim=anim, init="z_tilt", savename="magnon_all_tilted_antiferro")
     print("One tilted, with damping and negative correlation.")
-    S = run_simulation(n, params, heun_step, t_max=t_max, save=save, anim=anim, init="z",
+    S = run_simulation(n, params, heun_step, t_max=2*t_max, save=save, anim=anim, init="z",
         first_particle=np.array([0,1,1]), savename="magnon_antiferro")
 
-    # Lastly, look at the magnetization.
-    # TODO: Make a function that calculates magnetization of the system.
-    # Do random first, find the magnetization in equillibrium.
-    params.alpha = 0.05
-    #S = run_simulation(n, params, heun_step, save=False, anim=True, init="random")
+    ## Lastly, look at the magnetization.
+    ## TODO: Make a function that calculates magnetization of the system.
+    ## Do random first, find the magnetization in equillibrium.
+    #params.alpha = 0.05
+    ##S = run_simulation(n, params, heun_step, save=False, anim=True, init="random")
 
