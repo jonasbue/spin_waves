@@ -3,7 +3,7 @@
         title = {Magnon, $J = +1, \, \alpha = 0$},
         xlabel = $t$,
         ylabel = $z$,
-        skip coords between index={700}{3000},
+        skip coords between index={700}{10000},
     ]
         \addplot table [
             mark=none,

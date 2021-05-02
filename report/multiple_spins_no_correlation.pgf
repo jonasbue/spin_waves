@@ -1,7 +1,7 @@
 \begin{tikzpicture}
     \begin{axis}[
         title={10 spins with random directions. $\alpha = 0, \, J = 0$},
-        xlabel = $x $,
+        xlabel = $x$,
         ylabel = $y$,
     ]
         \addplot[

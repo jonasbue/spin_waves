@@ -3,6 +3,7 @@
         title={Random initial directions, $J = -1$},
         xlabel = $t$,
         ylabel = $z$,
+        skip coords between index={4000}{10000},
     ]
         \addplot table [
             mark=none,
