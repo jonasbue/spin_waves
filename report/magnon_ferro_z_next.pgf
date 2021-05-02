@@ -1,0 +1,54 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        title = {Magnon, $J = +1, \, \alpha = 0$},
+        xlabel = $t$,
+        ylabel = $z$,
+    ]
+        \addplot table [
+            mark=none,
+            x = z0,
+            y = z1,
+            y index filter/.code={\ifnot\numexpr\coordinateindex{0}\def\pgfmathresult{NaN}\fi},
+        ]{./data/10_spins_magnon_ferro_alpha_0-0.csv};
+        %\addplot table [
+        %    mark=none,
+        %    y = z1,
+        %]{./data/10_spins_magnon_ferro_alpha_0-0.csv};
+        %\addplot table [
+        %    mark=none,
+        %    y = z2,
+        %]{./data/10_spins_magnon_ferro_alpha_0-0.csv};
+        %\addplot table [
+        %    mark=none,
+        %    y = z3,
+        %]{./data/10_spins_magnon_ferro_alpha_0-0.csv};
+        %\addplot table [
+        %    mark=none,
+        %    y = z4,
+        %]{./data/10_spins_magnon_ferro_alpha_0-0.csv};
+        %\addplot table [
+        %    mark=none,
+        %    y = z5,
+        %]{./data/10_spins_magnon_ferro_alpha_0-0.csv};
+        %\addplot table [
+        %    mark=none,
+        %    y = z6,
+        %]{./data/10_spins_magnon_ferro_alpha_0-0.csv};
+        %\addplot table [
+        %    mark=none,
+        %    y = z7,
+        %]{./data/10_spins_magnon_ferro_alpha_0-0.csv};
+        %\addplot table [
+        %    mark=none,
+        %    y = z7,
+        %]{./data/10_spins_magnon_ferro_alpha_0-0.csv};
+        %\addplot table [
+        %    mark=none,
+        %    y = z8,
+        %]{./data/10_spins_magnon_ferro_alpha_0-0.csv};
+        %\addplot table [
+        %    mark=none,
+        %    y = z9,
+        %]{./data/10_spins_magnon_ferro_alpha_0-0.csv};
+    \end{axis}
+\end{tikzpicture}
