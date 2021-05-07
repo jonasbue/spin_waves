@@ -23,7 +23,7 @@ def task_2():
     N = int(t_max//h)
     params = EquationParameters()
     # First, the ground state.
-    J = 1
+    params.J = 1
     # Positive J
     #print("Chain, ground state")
     #chain_ground_state(n, params, J)
@@ -35,6 +35,26 @@ def task_2():
     save=True
     anim=False
     magnons(n, params, J, t_max, save, anim)
+
+def magnetization():
+    n = 10
+    t_max = 50
+    h = 0.01
+    N = int(t_max//h)
+    params = EquationParameters()
+    J = 1
+    params.alpha = 0.05
+    t = np.linspace(0, t_max, N)
+
+    S = run_simulation(n, params, heun_step, t_max=t_max, h=h, 
+        save=False, anim=False, init="z", first_particle=np.array([0,1,1]))
+    M = get_magnetization(S, params)
+    data = np.column_stack((t, M))
+    plt.plot(t, M)
+    plt.show()
+    np.savetxt("../report/magnetization_ferro.csv", 
+        data, header="t\tMz", delimiter="\t", comments="")
+
 
 
 def one_tilted(params):
@@ -143,6 +163,4 @@ def magnons(n, params, J, t_max, save, anim):
     ## Lastly, look at the magnetization.
     ## TODO: Make a function that calculates magnetization of the system.
     ## Do random first, find the magnetization in equillibrium.
-    #params.alpha = 0.05
-    ##S = run_simulation(n, params, heun_step, save=False, anim=True, init="random")
 

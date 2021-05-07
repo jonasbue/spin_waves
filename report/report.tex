@@ -1,6 +1,7 @@
 \documentclass{beamer}
 \usepackage{pgfplots}
 \usepgfplotslibrary{groupplots}
+\usepgfplotslibrary{units}
 \usepgfplotslibrary{external}
 \tikzexternalize[prefix=figurecache/] 
 \pgfplotsset{compat = 1.17}
@@ -181,6 +182,21 @@
 \end{figure}
 \end{frame}
 
+\begin{frame}
+    \frametitle{Spatial movement of the spin}
+\begin{figure}
+    \centering
+    \input{./magnon_phase_space.pgf}
+\end{figure}
+\end{frame}
+\begin{frame}
+    \frametitle{Spatial movment of the spin}
+\begin{figure}
+    \centering
+    \input{./magnon_phase_space_2.pgf}
+\end{figure}
+\end{frame}
+
 % 3: Talk a bit about magnons.
 
 % 4: Magnons with damping.
@@ -217,6 +233,14 @@
 \end{frame}
 
 % 6: Magnetization.
+\begin{frame}
+    \frametitle{Magnetization}
+\begin{figure}
+    \centering
+    \input{./magnetization_ferro.pgf}
+\end{figure}
+\end{frame}
+
 
 %\begin{frame}
 %\begin{thebibliography}{5}

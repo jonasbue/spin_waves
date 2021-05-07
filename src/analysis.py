@@ -59,3 +59,6 @@ def get_error(S, an_sol):
     error_r = np.linalg.norm(r_an - r_comp)/np.linalg.norm(r_an)
     return error_r
 
+def get_magnetization(S, params):
+    mu = params.mu
+    return np.sum(S[:,:,2], axis=1)*mu

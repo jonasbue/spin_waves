@@ -1,0 +1,18 @@
+\begin{tikzpicture}%[width=0.8\linewidth]
+    \begin{axis}[
+        title={Magnetization of chain},
+        xlabel = $t$,
+        ylabel = $M$,
+        y unit = mu,
+        legend pos=south east,
+    ]
+        \addplot [
+            color = black,
+        ] table [
+            mark=none,
+            x = t,
+            y = Mz,
+        ]{./magnetization_ferro.csv};
+        \addlegendentry{Magnetization}
+    \end{axis}
+\end{tikzpicture}
