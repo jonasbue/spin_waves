@@ -1,8 +1,8 @@
 \begin{tikzpicture}
     \begin{axis}[
         title = {Magnon, $J = +1, \, \alpha = 0$},
-        xlabel = $x0$,
-        ylabel = $x1$,
+        xlabel = $x$,
+        ylabel = $y$,
         skip coords between index={2000}{10000},
     ]
         \addplot table [
